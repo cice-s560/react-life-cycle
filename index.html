@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+    <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+
+    <script type="text/babel">
+
+        class NewGame extends React.Component {
+            $input = React.createRef();
+            next() {
+                if (!this.$input.current.value) {
+                    return;
+                }
+                this.props.startGame();
+            }
+            render() {
+                return(<div>
+                    <h2 class="h4 mb-4 pb-2 border-bottom">NUEVA PARTIDA</h2>
+                    <input ref={ this.$input } onKeyUp={ this.updateValue } placeholder="username" class="form-control mb-3"/>
+                    <button onClick={ this.next.bind(this) } class="btn btn-block  btn-primary">Empezar</button>
+                </div>);
+            }
+        }
+
+        class RunGame extends React.Component {
+            render() {
+                return(<div>
+                    <h2 class="h4 mb-4 pb-2 border-bottom">USER</h2>
+                    <p>¡Ánimo ya llevas <b>5</b> clicks!</p>
+                    <p class="mb-4">Te faltan solo <b>15</b> clicks para ganar</p>
+                    <button class="btn btn-block btn-primary mb-5">CLICK</button>
+                    <div class="progress">
+                        <div class="progress-bar bg-danger" style={{width: '30%'}}></div>
+                    </div>
+                </div>);
+            }
+        }
+
+        class EndGame extends React.Component {
+            render() {
+                return (<div>
+                    <h1>¡Has ganado!</h1>
+                </div>);
+            }
+        }
+
+        class SwitchPhase extends React.Component {
+            state = {
+                phase: 'start' // start, play, end
+            }
+            startGame() {
+                this.setState({
+                    phase: 'play'
+                });
+                console.log('New state');
+            }
+            render() {
+                switch(this.state.phase) {
+                    case 'play':
+                        return <RunGame />
+                    case 'end':
+                        return <EndGame />
+                    default:
+                        return <NewGame startGame={ this.startGame.bind(this) } />
+                }
+            }
+        }
+    
+        class AppComponent extends React.Component {
+            render() {
+                return(<div class="py-4">
+                    <div class="bg-primary text-light">
+                        <div class="container mb-5 py-2">
+                            <header class="row">
+                                <div class="col-12">
+                                    <h1 class="text-center">Clickator</h1>
+                                </div>
+                            </header>
+                        </div>
+                    </div>
+                    <main class="container">
+                        <div class="row text-center justify-content-center">
+                            <div class="col-12 col-md-6">
+                                <div class="border p-3">
+                                    <SwitchPhase />
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>);
+            }
+        }
+
+        ReactDOM.render(<AppComponent />, document.getElementById("root"));
+
+    </script>
+</body>
+</html>
