@@ -3,10 +3,11 @@ class NewGame extends React.Component {
   $difficulty = React.createRef();
   next(e) {
       e.preventDefault();
-      if (!this.$username.current.value) {
-          return;
+      if (!this.$username.current.value.trim()) {
+        this.$username.current.classList.add('is-invalid');
+        return;
       }
-      this.props.onStartGame(this.$username.current.value, this.$difficulty.current.value);
+      this.props.onStartGame(this.$username.current.value.trim(), this.$difficulty.current.value);
   }
   render() {
       return(<form onSubmit={ this.next.bind(this) }>
