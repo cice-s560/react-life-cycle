@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>City Destroyer</title>
+    <link rel="shortcut icon" href="assets/img/building_05.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="py-4">
+    <div>
         <div class="bg-primary text-light">
             <div class="container mb-5 py-2">
                 <header class="row">
                     <div class="col-12">
-                        <h1 class="text-center">Clickator</h1>
+                        <h1 class="text-center">City Destroyer</h1>
                     </div>
                 </header>
             </div>
         </div>
-        <main class="container">
+        <main class="container py-2">
             <div class="row text-center justify-content-center">
                 <div class="col-12 col-md-6">
                     <div class="border p-3">
@@ -44,6 +46,12 @@
                 phase: 'start', // start, play, end
                 username: 'user'
             }
+            newGame() {
+                console.log('New game');
+                this.setState({
+                    phase: 'start'
+                });
+            }
             startGame(username, difficulty) {
                 this.setState({
                     phase: 'play',
@@ -62,9 +70,10 @@
                     case 'play':
                         return <RunGame onEndGame={ this.endGame.bind(this) } username={ this.state.username } difficulty={ this.state.difficulty }/>
                     case 'end':
-                        return <EndGame win={ this.state.win }/>
+                        return <EndGame onRetry={ this.newGame.bind(this) } win={ this.state.win }/>
                     default:
                         return <NewGame onStartGame={ this.startGame.bind(this) } />
+                        // return <RunGame username={ this.state.username } difficulty={ this.state.difficulty }/>
                 }
             }
         }
