@@ -18,13 +18,13 @@
   <script type="text/babel">
       const root = document.getElementById("root");
 
-      class ResetButton extends React.Component {
-        render() {
-          return(
-            <button onClick={this.props.onClick}>Reset</button>
-          );
-        }
-      }
+      // class ResetButton extends React.Component {
+      //   render() {
+      //     return(
+      //       <button onClick={this.props.onClick}>Reset</button>
+      //     );
+      //   }
+      // }
       class CounterButton extends React.Component {        
         render() {
           return (
@@ -59,7 +59,6 @@
           }
         }
 
-
         addClick = () => {
           if (this.state.clicks == 0 ) {
             this.timer();
@@ -77,13 +76,13 @@
           }
         }
 
-        resetCounts = () => {
-          this.setState({
-            seconds: 20,
-            clicks: 0,
-            text: ""
-          })
-        }
+        // resetCounts = () => {
+        //   this.setState({
+        //     seconds: 20,
+        //     clicks: 0,
+        //     text: ""
+        //   })
+        // }
 
         timer = () => {
           setInterval(() => {
@@ -104,7 +103,7 @@
         render() {
           return (
             <div>
-              <ResetButton onClick={this.resetCounts}/>
+              {/*<ResetButton onClick={this.resetCounts}/>*/}
               <CounterButton onClick={this.addClick} clicks={this.state.clicks}/>
               <CountDown seconds={this.state.seconds}/>
               <WinOrLose text={this.state.text}/>
